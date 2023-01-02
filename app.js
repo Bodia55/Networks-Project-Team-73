@@ -336,6 +336,22 @@ app.route("/home/:category")
 
         if (categories.includes(categoryRoute)) {
             if (isAdmin) {
+                 for (let i = 0; i < userDests.length; i++) {
+                        userDestinationNames.push(userDests[i].destinationName);
+                    }
+                    for (let i = 0; i < destinations.length; i++) {
+                        if (destinations[i].category == categoryRoute) {
+                            destinationNames.push(destinations[i].destinationName);
+                            validDests.push(destinations[i]);
+                        }
+                    }
+                    for (let i = 0; i < destinationNames.length; i++) {
+                        if (userDestinationNames.includes(destinationNames[i])) {
+                            availableButtons.push(0);
+                        } else {
+                            availableButtons.push(1);
+                        }
+                    }
                 return response.render("category_page", { user: null, category: categoryRoute, destinations: validDests, available: availableButtons });
             }
             NetworksUser.findOne({ sessionID: cookie }, function (err, user) {
