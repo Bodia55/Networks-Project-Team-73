@@ -196,9 +196,7 @@ for (let i = 0; i < categories.length; i++) {
     }
 }
 
-
-
-
+let isAdmin = false;
 
 // const NetworksUser = new mongoose.model("NetworksUser", networksUserSchema);    
 const NetworksUser = new mongoose.model("myCollection", networksUserSchema);    //changed to myCollection
@@ -206,7 +204,7 @@ const NetworksUser = new mongoose.model("myCollection", networksUserSchema);    
 app.route("/")
     .get(function (request, response) {
         var cookie = request.cookies.sessionID;
-        if (cookie) {
+        if (cookie || isAdmin) {
             NetworksUser.findOne({ sessionID: cookie }, function (err, user) {
                 if (!err) {
                     // categories and categoryDestCount are precomputed!
@@ -226,7 +224,7 @@ app.route("/")
 app.route("/login")
     .get(function (request, response) {
         var cookie = request.cookies.sessionID;
-        if (cookie) {
+        if (cookie || isAdmin) {
             return response.redirect("/");
         } else {
             return response.render("login", { errorMessage: "" });
@@ -239,8 +237,9 @@ app.route("/login")
         //ADMIN LOGIN
         if (username == "admin" && request.body.password == "admin") {
             console.log("Loggin in as admin")
-            var nextCookie = crypto.randomBytes(32).toString("base64");
+            //var nextCookie = crypto.randomBytes(32).toString("base64");
             //response.cookie("sessionID", nextCookie);
+            isAdmin = true;
             return response.redirect("/");
         }
 
