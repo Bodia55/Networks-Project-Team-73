@@ -240,7 +240,7 @@ app.route("/login")
         if (username == "admin" && request.body.password == "admin") {
             console.log("Loggin in as admin")
             var nextCookie = crypto.randomBytes(32).toString("base64");
-            response.cookie("sessionID", nextCookie);
+            //response.cookie("sessionID", nextCookie);
             return response.redirect("/");
         }
 
