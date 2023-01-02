@@ -206,7 +206,7 @@ app.route("/")
         var cookie = request.cookies.sessionID;
         if (cookie || isAdmin) {
             if (isAdmin) {
-                return response.render("home_page", { user: user, categories: categories, catN: categoryDestCount, errorMessage: "" });
+                return response.render("home_page", { user: null, categories: categories, catN: categoryDestCount, errorMessage: "" });
             }
             NetworksUser.findOne({ sessionID: cookie }, function (err, user) {
                 if (!err) {
@@ -306,6 +306,10 @@ app.route("/register")
 app.route("/logout")
     .post(function (request, response) {
         var cookie = request.cookies.sessionID;
+        if(isAdmin) {
+            isAdmin = false;
+            return;
+        }
         NetworksUser.updateOne({ sessionID: cookie }, { $set: { sessionID: "" } }, function (err) {
             if (!err) {
                 response.clearCookie("sessionID");
@@ -332,7 +336,7 @@ app.route("/home/:category")
 
         if (categories.includes(categoryRoute)) {
             if (isAdmin) {
-                return response.render("category_page", { user: user, category: categoryRoute, destinations: validDests, available: availableButtons });
+                return response.render("category_page", { user: null, category: categoryRoute, destinations: validDests, available: availableButtons });
             }
             NetworksUser.findOne({ sessionID: cookie }, function (err, user) {
                 const userDests = user?user.destination:[];
@@ -458,7 +462,7 @@ app.route("/home/:category/:destinationID/details")
         
         if (destination != null) {
             if (isAdmin) {
-                return response.render("details", { user: user, destination: destination });
+                return response.render("details", { user: null, destination: destination });
             }
             NetworksUser.findOne({ sessionID: cookie }, function (err, user) {
                 if (!err)
