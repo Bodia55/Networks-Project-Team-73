@@ -9,7 +9,7 @@ const { json } = require("body-parser");
 const internal = require("stream");
 const app = express();
 
-const PORT = PROCESS.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const COOKIE_SECRET = "COOKIE_SECRET_PASSWORD_12345";
 
 app.use(express.static("static"));
