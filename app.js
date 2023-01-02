@@ -308,7 +308,7 @@ app.route("/logout")
         var cookie = request.cookies.sessionID;
         if(isAdmin) {
             isAdmin = false;
-            return;
+            return response.redirect("/");;
         }
         NetworksUser.updateOne({ sessionID: cookie }, { $set: { sessionID: "" } }, function (err) {
             if (!err) {
