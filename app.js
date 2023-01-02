@@ -336,6 +336,7 @@ app.route("/home/:category")
 
         if (categories.includes(categoryRoute)) {
             if (isAdmin) {
+                const userDests = [];
                  for (let i = 0; i < userDests.length; i++) {
                         userDestinationNames.push(userDests[i].destinationName);
                     }
