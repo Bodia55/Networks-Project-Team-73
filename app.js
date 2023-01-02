@@ -458,7 +458,7 @@ app.route("/home/:category/:destinationID/details")
         
         if (destination != null) {
             if (isAdmin) {
-                return return response.render("details", { user: user, destination: destination });
+                return response.render("details", { user: user, destination: destination });
             }
             NetworksUser.findOne({ sessionID: cookie }, function (err, user) {
                 if (!err)
